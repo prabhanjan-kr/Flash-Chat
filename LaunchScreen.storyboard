@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina5_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -14,25 +18,29 @@
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image" translatesAutoresizingMaskIntoConstraints="NO" id="e8P-2y-UOi"/>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LABLOGONewRound2" translatesAutoresizingMaskIntoConstraints="NO" id="Z2H-EB-qKh">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="flash chat icon" translatesAutoresizingMaskIntoConstraints="NO" id="Z2H-EB-qKh">
+                                <rect key="frame" x="57" y="178" width="300" height="300"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="d9Y-LO-4g3"/>
                                     <constraint firstAttribute="height" constant="300" id="z7B-Ec-NH1"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Flash Chat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nvh-c1-Ep5">
+                                <rect key="frame" x="111" y="638.66666666666663" width="192" height="47"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="40"/>
+                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.16470588235294117" green="0.69411764705882351" blue="0.8784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="e8P-2y-UOi" secondAttribute="bottom" id="9LD-TR-xd6"/>
                             <constraint firstItem="Z2H-EB-qKh" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="CHE-G5-Zpp"/>
-                            <constraint firstAttribute="trailing" secondItem="e8P-2y-UOi" secondAttribute="trailing" id="QlK-Wi-vgP"/>
-                            <constraint firstItem="e8P-2y-UOi" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="XCV-2t-8hq"/>
-                            <constraint firstItem="e8P-2y-UOi" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="btT-P1-AD1"/>
-                            <constraint firstItem="Z2H-EB-qKh" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="mLx-dJ-9ex"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="nvh-c1-Ep5" secondAttribute="bottom" constant="50.5" id="Jpn-FG-pDR"/>
+                            <constraint firstItem="nvh-c1-Ep5" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Lb4-ac-b1R"/>
+                            <constraint firstItem="Z2H-EB-qKh" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-40" id="mLx-dJ-9ex"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -42,7 +50,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Image" width="596" height="842"/>
-        <image name="LABLOGONewRound2" width="250" height="250"/>
+        <image name="flash chat icon" width="128" height="128"/>
     </resources>
 </document>
