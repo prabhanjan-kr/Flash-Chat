@@ -7,5 +7,9 @@ target 'Flash Chat' do
 
   # Pods for Flash Chat
 	pod 'Firebase/Core'
+	pod 'Firebase/Auth'
+	pod 'Firebase/Database'
+	pod 'SVProgressHUD'
+	pod 'ChameleonFramework'
 
 end
