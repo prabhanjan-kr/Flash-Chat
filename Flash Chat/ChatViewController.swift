@@ -11,7 +11,7 @@ import Firebase
 import SVProgressHUD
 
 
-class ChatViewController: UIViewController {
+class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // Declare instance variables here
 
@@ -26,8 +26,9 @@ class ChatViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //TODO: Set yourself as the delegate and datasource here:
+        messageTableView.delegate = self
+        messageTableView.dataSource = self
+        self.navigationItem.setHidesBackButton(true, animated:true)
         
         
         
@@ -37,9 +38,7 @@ class ChatViewController: UIViewController {
         
         //TODO: Set the tapGesture here:
         
-        
-
-        //TODO: Register your MessageCell.xib file here:
+        messageTableView.register(UINib(nibName: "MessageCell", bundle: nil), forCellReuseIdentifier: "customMessageCell")
 
         
     }
@@ -50,11 +49,22 @@ class ChatViewController: UIViewController {
     
     
     
-    //TODO: Declare cellForRowAtIndexPath here:
+     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "customMessageCell", for: indexPath) as! CustomMessageCell
+        cell.avatarImageView.image = UIImage(named: "egg")
+        cell.messageBody.text = "Hello there"
+        cell.senderUsername.text = "John Doe"
+        return cell
+    }
     
     
     
-    //TODO: Declare numberOfRowsInSection here:
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
     
     
     
