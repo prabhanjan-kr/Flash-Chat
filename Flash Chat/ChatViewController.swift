@@ -30,6 +30,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         messageTableView.dataSource = self
         self.navigationItem.setHidesBackButton(true, animated:true)
         
+        configureTableView()
+        
         
         
         //TODO: Set yourself as the delegate of the text field here:
@@ -43,7 +45,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
 
-    ///////////////////////////////////////////
+  
     
     //MARK: - TableView DataSource Methods
     
@@ -62,9 +64,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 10
     }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 100
+//    }
     
     
     
@@ -72,11 +74,12 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     
-    //TODO: Declare configureTableView here:
-    
-    
-    
-    ///////////////////////////////////////////
+    func configureTableView() {
+        
+        messageTableView.rowHeight = UITableViewAutomaticDimension
+        messageTableView.estimatedRowHeight = 120.0
+        messageTableView.separatorStyle = .none
+    }
     
     //MARK:- TextField Delegate Methods
     
