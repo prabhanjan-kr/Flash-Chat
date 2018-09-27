@@ -14,7 +14,7 @@ import SVProgressHUD
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
     // Declare instance variables here
-    
+    var messageArray : [Message] = [Message]()
     
     
     @IBOutlet var heightConstraint: NSLayoutConstraint!
@@ -26,6 +26,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         
         //tableview delegate and datasource
         messageTableView.delegate = self
@@ -47,6 +49,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedOutSideOfTextField))
         messageTableView.addGestureRecognizer(tapGestureRecognizer)
         
+        //looking for new msgs in db
+        //retrieveMessagesFromDB()
+        
         
     }
     
@@ -55,14 +60,14 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "customMessageCell", for: indexPath) as! CustomMessageCell
         cell.avatarImageView.image = UIImage(named: "egg")
-        cell.messageBody.text = "Hello there"
-        cell.senderUsername.text = "John Doe"
+        cell.messageBody.text = messageArray[indexPath.row].messageBody
+        cell.senderUsername.text = messageArray[indexPath.row].sender
         return cell
     }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return messageArray.count
     }
     
     @objc func tappedOutSideOfTextField() {
@@ -99,7 +104,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     //MARK: - Send & Recieve from Firebase
-    
     @IBAction func sendPressed(_ sender: AnyObject) {
         
         //messageTextfield.isEnabled = false
@@ -122,14 +126,35 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.messageTextfield.text = ""
             }
         }
+        retrieveMessagesFromDB()
+    }
+    
+   
+    //looking for new msgs in DB
+    func retrieveMessagesFromDB() {
         
-        
+        let database = Database.database().reference().child("Messages")
+        database.observeSingleEvent(of: .childAdded) { (snapshot) in
+            
+            
+            let newMessage = Message()
+            let snapShotDict = snapshot.value as! [String : String]
+            newMessage.sender = snapShotDict["sender"]!
+            newMessage.messageBody = snapShotDict["messageBody"]!
+            self.messageArray.append(newMessage)
+            self.messageTableView.reloadData()
+            self.scrollToBottom()
+            
+        }
         
     }
     
-    //TODO: Create the retrieveMessages method here:
-    
-    
+    func scrollToBottom(){
+        DispatchQueue.main.async {
+            let indexPath = IndexPath(row: self.messageArray.count-1, section: 0)
+            self.messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }
+    }
     
     
     
