@@ -11,12 +11,12 @@ import Firebase
 import SVProgressHUD
 
 
-class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
     // Declare instance variables here
-
     
-    // We've pre-linked the IBOutlets
+    
+    
     @IBOutlet var heightConstraint: NSLayoutConstraint!
     @IBOutlet var sendButton: UIButton!
     @IBOutlet var messageTextfield: UITextField!
@@ -26,32 +26,33 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //tableview delegate and datasource
         messageTableView.delegate = self
         messageTableView.dataSource = self
+        
+        //hiding back button
         self.navigationItem.setHidesBackButton(true, animated:true)
         
+        //cofiguring tableview
         configureTableView()
         
+        //textfield delegate
+        messageTextfield.delegate = self
         
-        
-        //TODO: Set yourself as the delegate of the text field here:
-
-        
-        
-        //TODO: Set the tapGesture here:
-        
+        //registering  tableview cell nib
         messageTableView.register(UINib(nibName: "MessageCell", bundle: nil), forCellReuseIdentifier: "customMessageCell")
-
+        
+        //tap gesture recognizer
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedOutSideOfTextField))
+        messageTableView.addGestureRecognizer(tapGestureRecognizer)
+        
         
     }
-
-  
     
     //MARK: - TableView DataSource Methods
     
-    
-    
-     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "customMessageCell", for: indexPath) as! CustomMessageCell
         cell.avatarImageView.image = UIImage(named: "egg")
         cell.messageBody.text = "Hello there"
@@ -60,20 +61,17 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 10
     }
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 100
-//    }
+    
+    @objc func tappedOutSideOfTextField() {
+        print("tap detected")
+        messageTextfield.endEditing(true)
+    }
     
     
-    
-    //TODO: Declare tableViewTapped here:
-    
-    
-    
+    // for message cell Automatic height based on message size
     func configureTableView() {
         
         messageTableView.rowHeight = UITableViewAutomaticDimension
@@ -82,32 +80,49 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     //MARK:- TextField Delegate Methods
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+        UIView.animate(withDuration: 0.5) {
+            self.heightConstraint.constant = 320
+            self.view.layoutIfNeeded()
+        }
+        
+    }
     
-    
-
-    
-    //TODO: Declare textFieldDidBeginEditing here:
-    
-    
-    
-    
-    //TODO: Declare textFieldDidEndEditing here:
-    
-
-    
-    ///////////////////////////////////////////
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        UIView.animate(withDuration: 0.5) {
+            self.heightConstraint.constant = 50
+            self.view.layoutIfNeeded()
+        }
+    }
     
     
     //MARK: - Send & Recieve from Firebase
     
-    
-    
-    
-    
     @IBAction func sendPressed(_ sender: AnyObject) {
         
+        //messageTextfield.isEnabled = false
+        sendButton.isEnabled = false
+        let messageDB = Database.database().reference().child("Messages")
+        let messageDictionary = ["sender" : Auth.auth().currentUser?.email, "messageBody" : messageTextfield.text]
+        messageDB.childByAutoId().setValue(messageDictionary) {
+            (error, reference) in
+            
+            if error != nil {
+                print("error: message not sent")
+                self.messageTextfield.isEnabled = true
+                self.sendButton.isEnabled = true
+                
+                
+            } else {
+                print("message saved in db")
+                self.messageTextfield.isEnabled = true
+                self.sendButton.isEnabled = true
+                self.messageTextfield.text = ""
+            }
+        }
         
-        //TODO: Send the message to Firebase and save it in our database
         
         
     }
@@ -115,7 +130,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     //TODO: Create the retrieveMessages method here:
     
     
-
+    
     
     
     
@@ -133,6 +148,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
-
-
+    
+    
 }
