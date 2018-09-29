@@ -27,6 +27,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //message textfield responder
+        messageTextfield.becomeFirstResponder()
         
         
         //tableview delegate and datasource
@@ -50,8 +52,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         messageTableView.addGestureRecognizer(tapGestureRecognizer)
         
         //looking for new msgs in db
-        //retrieveMessagesFromDB()
-        
+        SVProgressHUD.show()
+        retrieveMessagesFromDB()
+        SVProgressHUD.dismiss()
         
     }
     
@@ -142,6 +145,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             newMessage.sender = snapShotDict["sender"]!
             newMessage.messageBody = snapShotDict["messageBody"]!
             self.messageArray.append(newMessage)
+            self.configureTableView()
             self.messageTableView.reloadData()
             self.scrollToBottom()
             

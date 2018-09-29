@@ -21,6 +21,7 @@ class RegisterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        emailTextfield.becomeFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {

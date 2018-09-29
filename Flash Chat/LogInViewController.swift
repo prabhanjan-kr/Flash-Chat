@@ -18,6 +18,7 @@ class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        emailTextfield.becomeFirstResponder()
         
     }
 
